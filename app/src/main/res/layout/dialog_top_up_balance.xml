@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    android:padding="24dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="@color/dividerColor"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top Up Balance"
+        android:textColor="@color/textPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:text="Rp 50.000"
+            android:textColor="@color/textPrimary"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            app:cornerRadius="16dp"
+            android:layout_margin="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:text="Rp 100.000"
+            android:textColor="@color/textPrimary"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            app:cornerRadius="16dp"
+            android:layout_margin="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:text="Rp 200.000"
+            android:textColor="@color/textPrimary"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            app:cornerRadius="16dp"
+            android:layout_margin="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_columnWeight="1"
+            android:text="Rp 500.000"
+            android:textColor="@color/textPrimary"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            app:cornerRadius="16dp"
+            android:layout_margin="8dp" />
+    </GridLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom Amount (Min. Rp.30.000)"
+        android:textColor="@color/textSecondary"
+        android:textSize="12sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:hint="Enter amount"
+        android:inputType="number"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_field_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryOrange"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            app:cornerRadius="100dp"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_top_up"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Top Up"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primaryOrange"
+            app:cornerRadius="100dp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

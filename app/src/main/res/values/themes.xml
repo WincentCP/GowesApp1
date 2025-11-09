@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.GowesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/primaryOrange</item>
+        <item name="android:windowBackground">@color/backgroundCream</item>
+
+        <item name="android:fontFamily">@font/manrope_font_family</item>
+
+        <item name="fontFamily">@font/manrope_font_family</item>
+
+    </style>
+</resources>

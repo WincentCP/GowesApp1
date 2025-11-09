@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <path
+      android:pathData="M0,16C0,7.163 7.163,0 16,0H31.974C40.811,0 47.974,7.163 47.974,16V31.974C47.974,40.811 40.811,47.974 31.974,47.974H16C7.163,47.974 0,40.811 0,31.974V16Z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="0"
+          android:startY="0"
+          android:endX="47.974"
+          android:endY="47.974"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFE9A00"/>
+        <item android:offset="1" android:color="#FFE17100"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M22.242,32.982C22.417,33.286 22.669,33.539 22.973,33.714C23.277,33.889 23.622,33.982 23.972,33.982C24.323,33.982 24.668,33.889 24.972,33.714C25.276,33.539 25.528,33.286 25.704,32.982"
+      android:strokeLineJoin="round"
+      android:strokeWidth="1.99892"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+  <path
+      android:pathData="M15.239,27.312C15.109,27.455 15.022,27.632 14.991,27.824C14.96,28.015 14.985,28.211 15.063,28.388C15.141,28.566 15.269,28.716 15.431,28.822C15.594,28.928 15.783,28.984 15.977,28.985H31.968C32.162,28.985 32.351,28.928 32.514,28.823C32.676,28.717 32.804,28.566 32.882,28.389C32.961,28.212 32.986,28.016 32.955,27.825C32.924,27.634 32.838,27.456 32.708,27.313C31.378,25.942 29.969,24.486 29.969,19.989C29.969,18.399 29.337,16.874 28.213,15.749C27.088,14.625 25.563,13.993 23.972,13.993C22.382,13.993 20.857,14.625 19.732,15.749C18.608,16.874 17.976,18.399 17.976,19.989C17.976,24.486 16.565,25.942 15.239,27.312Z"
+      android:strokeLineJoin="round"
+      android:strokeWidth="1.99892"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+</vector>

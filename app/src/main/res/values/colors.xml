@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryOrange">#D97D4D</color>
+    <color name="primaryOrangeLight">#FBEAE3</color>
+    <color name="primaryGreen">#34A853</color>
+    <color name="primaryGreenLight">#E0F5E9</color>
+    <color name="primaryRed">#E53935</color>
+
+    <color name="backgroundCream">#FEFBF8</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="textPrimary">#333333</color>
+    <color name="textSecondary">#8A8A8A</color>
+    <color name="textOnPrimary">#FFFFFF</color>
+    <color name="textGreen">#28A745</color>
+
+    <color name="accentBlue">#007AFF</color>
+    <color name="accentPurple">#9B51E0</color>
+    <color name="dividerColor">#F0F0F0</color>
+
+    <color name="scannerBlack">#0A0A0A</color>
+    <color name="scannerOverlay">#A6000000</color> <color name="scannerAccent">#D97D4D</color> <color name="warningYellow">#FFC107</color>
+</resources>
