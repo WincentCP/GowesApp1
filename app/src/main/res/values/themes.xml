@@ -1,8 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.GowesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="colorPrimary">@color/primaryOrange</item>
+        <item name="colorPrimaryVariant">@color/primaryOrange</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/primaryOrange</item>
+        <item name="colorSecondaryVariant">@color/primaryOrange</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
         <item name="android:windowBackground">@color/backgroundCream</item>
 
         <item name="android:fontFamily">@font/manrope_font_family</item>
@@ -10,4 +20,47 @@
         <item name="fontFamily">@font/manrope_font_family</item>
 
     </style>
+
+
+    <style name="Gowes.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="backgroundTint">@color/primaryOrange</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Gowes.Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/primaryOrange</item>
+        <item name="strokeColor">@color/dividerColor</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Gowes.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">@drawable/input_field_background</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorHint">@color/textSecondary</item>
+    </style>
+
+    <style name="Gowes.FragmentTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
 </resources>
