@@ -6,19 +6,17 @@
         <item name="colorPrimary">@color/primaryOrange</item>
         <item name="colorPrimaryVariant">@color/primaryOrange</item>
         <item name="colorOnPrimary">@color/white</item>
-
         <item name="colorSecondary">@color/primaryOrange</item>
         <item name="colorSecondaryVariant">@color/primaryOrange</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/backgroundCream</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
         <item name="android:windowBackground">@color/backgroundCream</item>
 
         <item name="android:fontFamily">@font/manrope_font_family</item>
-
         <item name="fontFamily">@font/manrope_font_family</item>
-
     </style>
 
 

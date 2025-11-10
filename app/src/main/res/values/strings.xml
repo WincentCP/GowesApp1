@@ -1,16 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gowes</string>
 
+    <string name="login">Login</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="complete">Complete</string>
+    <string name="continue_button">Continue</string>
+    <string name="terms_agreement">By continuing, you agree to our Terms &amp; Privacy Policy</string>
+    <string name="rental_terms_agreement">By confirming, you agree to the rental terms</string>
+
     <string name="splash_title">GOWES</string>
     <string name="splash_subtitle">The Smart Way To Explore</string>
-    <string name="splash_tagline">Explore Indonesia sustainably...</string>
+    <string name="splash_tagline">Explore Indonesia sustainably with our premium bike-sharing service</string>
+    <string name="feature_title_eco">Eco-Friendly Rides</string>
+    <string name="feature_subtitle_eco">Reduce carbon footprint</string>
+    <string name="feature_title_quick">Quick &amp; Easy</string>
+    <string name="feature_subtitle_quick">Scan, ride, and park</string>
+    <string name="feature_title_affordable">Affordable</string>
+    <string name="feature_subtitle_affordable">Just Rp 8.000 per hour</string>
     <string name="create_account">Create Account</string>
-    <string name="login">Login</string>
 
     <string name="welcome_back">Welcome Back</string>
     <string name="login_to_continue">Login to continue</string>
     <string name="phone_number">Phone Number</string>
+    <string name="hint_phone_number">+62 xxx-xxxx-xxxx</string>
     <string name="password">Password</string>
+    <string name="hint_password">Enter your password</string>
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="no_account">Don\'t have an account? Create one</string>
+
+    <string name="header_create_account">Create Account</string>
+    <string name="subheader_create_account">Let\'s get you started</string>
+    <string name="step_1_of_2">Step 1 of 2</string>
+    <string name="full_name">Full Name</string>
+    <string name="hint_full_name">Enter your name</string>
+
+    <string name="header_verify_identity">Verify Identity</string>
+    <string name="subheader_verify_identity">One-time verification for your safety</string>
+    <string name="step_2_of_2">Step 2 of 2</string>
+    <string name="why_we_need_this">Why we need this</string>
+    <string name="why_we_need_this_desc">Your information is encrypted and helps ensure safety for all riders</string>
+    <string name="nik_label">NIK (National ID Number)</string>
+    <string name="nik_hint">16 digit NIK</string>
+    <string name="ktp_label">ID Card Photo (KTP)</string>
+    <string name="ktp_upload_prompt">Upload your KTP</string>
+    <string name="ktp_upload_subtext">Make sure all details are visible</string>
+    <string name="ktp_choose_photo">Choose Photo</string>
+    <string name="ktp_upload_success">KTP uploaded successfully</string>
+    <string name="ktp_change_photo">Change Photo</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_rides">Rides</string>
+    <string name="nav_scan">Scan</string>
+    <string name="nav_wallet">Wallet</string>
+    <string name="nav_profile">Profile</string>
+
+    <string name="welcome_back_user">Welcome back,</string>
+    <string name="wallet_balance">Wallet Balance</string>
+    <string name="top_up_balance">Top Up Balance</string>
+    <string name="total_rides">Total Rides</string>
+    <string name="time_saved">Time Saved</string>
+    <string name="co2_saved">CO2 Saved</string>
+    <string name="station_name">UPH Medan Station</string>
+    <string name="station_subtext">Main bike station</string>
+    <string name="station_status">Open 24/7</string>
+    <string name="eco_warrior_title">Eco Warrior</string>
+    <string name="eco_warrior_subtitle">You\'re in the top 10% of sustainable riders!</string>
+    <string name="active_ride">Active Ride</string>
+
+    <string name="rides_title">Rides</string>
+    <string name="ready_to_ride">Ready to Ride?</string>
+    <string name="ready_to_ride_desc">Scan a bike QR code to start your journey</string>
+    <string name="scan_bike_qr">Scan Bike QR</string>
+    <string name="recent_rides">Recent Rides</string>
+    <string name="view_all">View All</string>
+    <string name="riding_tips">Riding Tips</string>
+    <string name="tip_title_traffic">Follow Traffic Rules</string>
+    <string name="tip_desc_traffic">Always obey traffic signals and signs</string>
+    <string name="tip_title_helmet">Wear Protection</string>
+    <string name="tip_desc_helmet">Helmet recommended for safety</string>
+    <string name="tip_title_lights">Check Lights</string>
+    <string name="tip_desc_lights">Ensure bike lights work at night</string>
+    <string name="promo_title">Weekend Special! 🎉</string>
+    <string name="promo_desc">Get 20% off all rides this Saturday &amp; Sunday</string>
+
+    <string name="profile_title">Profile</string>
+    <string name="verified">Verified</string>
+    <string name="achievements">Achievements</string>
+    <string name="ach_eco_warrior">ECO WARRIOR</string>
+    <string name="ach_eco_warrior_desc">Saved 12kg CO₂</string>
+    <string name="ach_early_adopter">EARLY ADOPTER</string>
+    <string name="ach_early_adopter_desc">First 100 users</string>
+    <string name="ach_regular_rider">REGULAR RIDER</string>
+    <string name="ach_regular_rider_desc">20+ rides completed</string>
+    <string name="your_impact">Your Impact</string>
+    <string name="menu_personal_info">Personal Information</string>
+    <string name="menu_personal_info_desc">Update your details</string>
+    <string name="menu_payment_methods">Payment Methods</string>
+    <string name="menu_payment_methods_desc">Manage cards &amp; wallets</string>
+    <string name="menu_ride_history">Ride History</string>
+    <string name="menu_ride_history_desc">View past trips</string>
+    <string name="menu_notifications">Notifications</string>
+    <string name="menu_notifications_desc">Alerts &amp; preferences</string>
+    <string name="menu_privacy">Privacy &amp; Security</string>
+    <string name="menu_privacy_desc">Control your data</string>
+    <string name="menu_help">Help &amp; Support</string>
+    <string name="menu_help_desc">Get assistance</string>
+    <string name="menu_app_settings">App Settings</string>
+    <string name="menu_app_settings_desc">Customize your experience</string>
+    <string name="log_out">Log Out</string>
+
 </resources>

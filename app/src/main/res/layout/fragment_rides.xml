@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundCream">
+    android:background="@color/backgroundCream"
+    tools:context=".RidesFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"> <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/tv_rides_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rides"
-            android:textColor="@color/textPrimary"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+        android:padding="16dp"
+        android:paddingBottom="96dp"> <TextView
+        android:id="@+id/tv_rides_title"
+        style="@style/Gowes.FragmentTitle"
+        android:text="@string/rides_title" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -49,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ready to Ride?"
+                    android:text="@string/ready_to_ride"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -58,20 +50,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scan a bike QR code to start your journey"
+                    android:text="@string/ready_to_ride_desc"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:alpha="0.9" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_scan_qr"
+                    style="@style/Gowes.Button.Secondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scan Bike QR"
-                    android:textAllCaps="false"
-                    android:textColor="@color/primaryOrange"
+                    android:text="@string/scan_bike_qr"
                     android:backgroundTint="@color/white"
-                    app:cornerRadius="100dp"
                     app:icon="@drawable/ic_qr_scan_orange"
                     app:iconTint="@color/primaryOrange"
                     android:paddingStart="16dp"
@@ -87,33 +77,6 @@
             android:layout_marginTop="16dp"
             android:weightSum="3">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                android:layout_marginEnd="8dp">
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp">
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp"
-                android:layout_marginStart="8dp">
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
         <RelativeLayout
@@ -123,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recent Rides"
+                android:text="@string/recent_rides"
                 android:textColor="@color/textPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -131,7 +94,7 @@
                 android:id="@+id/tv_view_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View All"
+                android:text="@string/view_all"
                 android:textColor="@color/primaryOrange"
                 android:textStyle="bold"
                 android:layout_alignParentEnd="true"
@@ -147,47 +110,12 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/dividerColor"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/dividerColor"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </RelativeLayout>
-            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Riding Tips"
+            android:text="@string/riding_tips"
             android:textColor="@color/textPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -225,13 +153,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Follow Traffic Rules"
+                            android:text="@string/tip_title_traffic"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Always obey traffic signals and signs"
+                            android:text="@string/tip_desc_traffic"
                             android:textColor="@color/textSecondary"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -263,13 +191,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wear Protection"
+                            android:text="@string/tip_title_helmet"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Helmet recommended for safety"
+                            android:text="@string/tip_desc_helmet"
                             android:textColor="@color/textSecondary"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -301,13 +229,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Check Lights"
+                            android:text="@string/tip_title_lights"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ensure bike lights work at night"
+                            android:text="@string/tip_desc_lights"
                             android:textColor="@color/textSecondary"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -328,44 +256,34 @@
                 android:background="@drawable/banner_weekend_special"
                 android:padding="16dp"
                 android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_weekend_special" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/promo_title"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/promo_desc"
+                        android:textColor="@color/white"
+                        android:alpha="0.9"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/bottom_nav_background"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="20dp"
-        app:fabCradleVerticalOffset="0dp">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            app:elevation="0dp"
-            app:itemIconTint="@color/bottom_nav_color_selector"
-            app:itemTextColor="@color/bottom_nav_color_selector"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_menu" />
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_qr_scan"
-        app:backgroundTint="@color/primaryOrange"
-        app:tint="@color/white"
-        app:layout_anchor="@id/bottom_app_bar"
-        app:maxImageSize="32dp" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.core.widget.NestedScrollView>
