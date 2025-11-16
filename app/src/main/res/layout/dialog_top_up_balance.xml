@@ -89,6 +89,7 @@
         android:layout_marginStart="8dp" />
 
     <EditText
+        android:id="@+id/et_amount"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:hint="Enter amount"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundCream"
+    android:background="@color/white"
     tools:context=".CreateAccountActivity">
 
     <!-- Back Arrow (Toolbar imitation) -->
@@ -17,6 +17,7 @@
         app:tint="@color/textPrimary"
         android:padding="16dp"
         android:contentDescription="Back"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -38,7 +39,7 @@
         android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/splash_title"
+        android:text="Create Account"
         android:textColor="@color/textPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -52,130 +53,181 @@
         android:id="@+id/tv_app_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/splash_subtitle"
+        android:text="Create an account to start your journey"
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Step Progress Bar -->
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginTop="24dp"
-        android:progress="50"
-        android:progressDrawable="@drawable/progress_bar_progress"
-        android:background="@drawable/progress_bar_background"
-        app:layout_constraintTop_toBottomOf="@+id/tv_app_subtitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- ProgressBar (dihapus karena ini bukan multi-step) -->
+    <!-- Step Text (dihapus) -->
 
-    <!-- Step Text -->
-    <TextView
-        android:id="@+id/tv_step"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/step_1_of_2"
-        android:textColor="@color/textSecondary"
-        android:textSize="12sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/progress_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Form Container -->
-    <LinearLayout
-        android:id="@+id/ll_form"
+    <!-- Form Container (Sekarang menggunakan ScrollView) -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
+        android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_step"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_subtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Header -->
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_form"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/header_create_account"
-            android:textColor="@color/textPrimary"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:clipToPadding="false"
+            android:paddingBottom="100dp"> <!-- Padding bawah agar tidak tertutup tombol -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/subheader_create_account"
-            android:textColor="@color/textSecondary"
-            android:textSize="16sp"
-            android:layout_marginTop="4dp" />
+            <!-- Full Name Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full Name"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <!-- Full Name Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/full_name"
-            android:textColor="@color/textPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp" />
+            <!-- Full Name Input -->
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field_background"
+                android:hint="Enter your full name"
+                android:inputType="textPersonName"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="8dp" />
 
-        <!-- Full Name Input -->
-        <EditText
-            android:id="@+id/et_full_name"
-            style="@style/Gowes.EditText"
-            android:hint="@string/hint_full_name"
-            android:inputType="textPersonName"
-            android:layout_marginTop="8dp" />
+            <!-- Phone Number Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Number"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
 
-        <!-- Phone Number Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_number"
-            android:textColor="@color/textPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp" />
+            <!-- Phone Number Input -->
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field_background"
+                android:hint="Enter your phone number"
+                android:inputType="phone"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="8dp" />
 
-        <!-- Phone Number Input -->
-        <EditText
-            android:id="@+id/et_phone"
-            style="@style/Gowes.EditText"
-            android:hint="@string/hint_phone_number"
-            android:inputType="phone"
-            android:layout_marginTop="8dp" />
+            <!-- (BARU) Email Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
 
-        <!-- Continue Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_continue"
-            style="@style/Gowes.Button.Primary"
-            android:text="@string/continue_button"
-            android:layout_marginTop="32dp" />
+            <!-- (BARU) Email Input -->
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field_background"
+                android:hint="Enter your email"
+                android:inputType="textEmailAddress"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="8dp" />
 
-    </LinearLayout>
+            <!-- (BARU) Password Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
 
-    <!-- Terms and Policy Text -->
-    <TextView
-        android:id="@+id/tv_terms"
-        android:layout_width="0dp"
+            <!-- (BARU) Password Input -->
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field_background"
+                android:hint="Enter your password"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- (BARU) Confirm Password Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp" />
+
+            <!-- (BARU) Confirm Password Input -->
+            <EditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field_background"
+                android:hint="Confirm your password"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="8dp" />
+
+            <!-- (BARU) Link "Login here" -->
+            <TextView
+                android:id="@+id/tv_login_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account? Login here"
+                android:textColor="@color/primaryOrange"
+                android:textSize="14sp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"/>
+
+            <!-- Tombol (ID diubah ke btn_create_account) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_account"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Create Account"
+                android:backgroundTint="@color/primaryOrange"
+                app:cornerRadius="100dp"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- (BARU) ProgressBar untuk loading -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/terms_agreement"
-        android:textColor="@color/textSecondary"
-        android:textSize="12sp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:paddingStart="32dp"
-        android:paddingEnd="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"/>
+
+    <!-- Terms and Policy Text (dihapus agar tidak tumpang tindih) -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

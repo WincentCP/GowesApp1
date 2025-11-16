@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.DocumentSnapshot; // FIX: Added missing import
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -134,7 +134,7 @@ public class ActiveRideActivity extends AppCompatActivity {
     }
 
     private void showDetectingDialog() {
-        // ... (Logika tidak berubah) ...
+        // ... (Logika dialog tidak berubah) ...
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.setContentView(R.layout.dialog_detecting_bike);
         dialog.setCancelable(false);

@@ -25,7 +25,7 @@ import androidx.core.content.ContextCompat;
 
 // --- IMPORT MLKIT BARU ---
 import com.google.android.gms.tasks.Task;
-import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListenableFuture; // Diperlukan untuk cameraProviderFuture
 import com.google.mlkit.vision.barcode.BarcodeScanner;
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
@@ -66,6 +66,8 @@ public class ScanQrActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr);
 
+        // Pastikan ID ini (camera_preview, scanner_ui_layout, dll.)
+        // cocok dengan file layout/activity_scan_qr.xml Anda.
         cameraPreview = findViewById(R.id.camera_preview);
         scannerUiLayout = findViewById(R.id.scanner_ui_layout);
         warningLayout = findViewById(R.id.warning_layout);
@@ -97,7 +99,7 @@ public class ScanQrActivity extends AppCompatActivity {
         userDoc.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 Boolean isActiveRide = documentSnapshot.getBoolean("isActiveRide");
-                if (isActiveRide != null && isActiveRide) {
+                if (Boolean.TRUE.equals(isActiveRide)) {
                     // Jika perjalanan aktif, tunjukkan peringatan
                     showWarningLayout();
                 } else {
@@ -184,15 +186,22 @@ public class ScanQrActivity extends AppCompatActivity {
             Task<List<Barcode>> result = barcodeScanner.process(image)
                     .addOnSuccessListener(barcodes -> {
                         if (!barcodes.isEmpty()) {
-                            isScanningPaused = true; // Hentikan pemindaian setelah berhasil
+                            isScanningPaused = true; // Hentikan pemindaian sementara
                             String qrCodeValue = barcodes.get(0).getRawValue();
                             Log.d(TAG, "QR Code detected: " + qrCodeValue);
 
-                            // Kirim ID motor ke BikeDetailsActivity
-                            Intent intent = new Intent(ScanQrActivity.this, BikeDetailsActivity.class);
-                            intent.putExtra("BIKE_ID", qrCodeValue);
-                            startActivity(intent);
-                            finish(); // Tutup pemindai
+                            // FIX: Validasi QR Code sebelum melanjutkan
+                            if (qrCodeValue != null && qrCodeValue.startsWith("GOWES_BIKE_")) {
+                                // QR Code valid, kirim ID motor ke BikeDetailsActivity
+                                Intent intent = new Intent(ScanQrActivity.this, BikeDetailsActivity.class);
+                                intent.putExtra("BIKE_ID", qrCodeValue);
+                                startActivity(intent);
+                                finish(); // Tutup pemindai
+                            } else {
+                                // QR Code tidak valid
+                                Toast.makeText(this, "Invalid QR Code. Please scan a valid Gowes bike.", Toast.LENGTH_SHORT).show();
+                                isScanningPaused = false; // Izinkan pemindaian lagi
+                            }
                         }
                     })
                     .addOnFailureListener(e -> Log.e(TAG, "Barcode scanning failed", e))
