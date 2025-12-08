@@ -1,5 +1,6 @@
 package edu.uph.m23si1.gowesapp;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +39,9 @@ public class WalletFragment extends Fragment {
     private FirebaseAuth mAuth;
     private ListenerRegistration userListener;
 
-    private TextView tvBalance;
+    private TextView tvBalance, tvCardLast4;
     private CardView linkedCardView, linkPaymentView;
+    private ImageView btnRemoveCard;
 
     @Nullable
     @Override
@@ -51,6 +54,8 @@ public class WalletFragment extends Fragment {
         tvBalance = view.findViewById(R.id.tv_wallet_balance_main);
         linkedCardView = view.findViewById(R.id.linked_card_view);
         linkPaymentView = view.findViewById(R.id.link_payment_view);
+        tvCardLast4 = view.findViewById(R.id.tv_card_last4);
+        btnRemoveCard = view.findViewById(R.id.btn_remove_card);
 
         if (linkPaymentView != null) {
             linkPaymentView.setOnClickListener(v -> showLinkPaymentDialog());
@@ -61,7 +66,35 @@ public class WalletFragment extends Fragment {
             btnTopUpMain.setOnClickListener(v -> showTopUpDialog());
         }
 
+        if (btnRemoveCard != null) {
+            btnRemoveCard.setOnClickListener(v -> confirmRemoveCard());
+        }
+
         return view;
+    }
+
+    private void confirmRemoveCard() {
+        if (getContext() == null) return;
+        new AlertDialog.Builder(getContext())
+                .setTitle("Remove Card")
+                .setMessage("Are you sure you want to remove this payment method?")
+                .setPositiveButton("Remove", (dialog, which) -> removeCard())
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void removeCard() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("isCardLinked", false);
+            data.put("cardLast4", null); // Clear the number
+
+            db.collection("users").document(user.getUid())
+                    .set(data, SetOptions.merge())
+                    .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Card Removed", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to remove card", Toast.LENGTH_SHORT).show());
+        }
     }
 
     private void showLinkPaymentDialog() {
@@ -72,15 +105,29 @@ public class WalletFragment extends Fragment {
 
         Button btnCancel = dialog.findViewById(R.id.btn_cancel);
         Button btnLink = dialog.findViewById(R.id.btn_link);
+        EditText etCardNumber = dialog.findViewById(R.id.et_card_number);
 
         if (btnCancel != null) btnCancel.setOnClickListener(v -> dialog.dismiss());
 
         if (btnLink != null) {
             btnLink.setOnClickListener(v -> {
+                String cardNumber = "";
+                if (etCardNumber != null) {
+                    cardNumber = etCardNumber.getText().toString().replace(" ", "");
+                }
+
+                if (cardNumber.length() < 13) {
+                    Toast.makeText(getContext(), "Invalid card number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String last4 = cardNumber.substring(cardNumber.length() - 4);
+
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
                     Map<String, Object> data = new HashMap<>();
                     data.put("isCardLinked", true);
+                    data.put("cardLast4", last4); // FIX: Save user input
 
                     db.collection("users").document(user.getUid())
                             .set(data, SetOptions.merge())
@@ -215,9 +262,14 @@ public class WalletFragment extends Fragment {
                 }
 
                 Boolean isCardLinked = snapshot.getBoolean("isCardLinked");
+                String last4 = snapshot.getString("cardLast4");
+
                 if (Boolean.TRUE.equals(isCardLinked)) {
                     if (linkedCardView != null) linkedCardView.setVisibility(View.VISIBLE);
                     if (linkPaymentView != null) linkPaymentView.setVisibility(View.GONE);
+                    if (tvCardLast4 != null) {
+                        tvCardLast4.setText("•••• " + (last4 != null ? last4 : "xxxx"));
+                    }
                 } else {
                     if (linkedCardView != null) linkedCardView.setVisibility(View.GONE);
                     if (linkPaymentView != null) linkPaymentView.setVisibility(View.VISIBLE);

@@ -48,7 +48,6 @@
                     android:drawablePadding="8dp"
                     android:textSize="14sp" />
 
-                <!-- FIX: Added ID here so Java can update the balance -->
                 <TextView
                     android:id="@+id/tv_wallet_balance_main"
                     android:layout_width="wrap_content"
@@ -102,7 +101,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp 45K"
+                        android:text="Rp 45.000"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@color/textPrimary"
@@ -135,7 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp 22K"
+                        android:text="Rp 22.000"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@color/textPrimary"
@@ -166,43 +165,64 @@
             android:layout_marginTop="12dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            android:visibility="gone"> <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_credit_card" />
+            android:visibility="gone">
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
+                android:padding="16dp"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_credit_card" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp">
+                    <TextView
+                        android:id="@+id/tv_card_last4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•••• 4324"
+                        android:textColor="@color/textPrimary"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Credit Card"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- FIX: Replaced chip_green_background with bg_status_active to remove 'Open 24/7' text -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="•••• 4324"
-                    android:textColor="@color/textPrimary"
-                    android:textStyle="bold" />
-                <TextView
+                    android:text="Active"
+                    android:textColor="@color/primaryGreen"
+                    android:background="@drawable/bg_status_active"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/ic_check_small_green"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:id="@+id/btn_remove_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Credit Card"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="12sp" />
+                    android:src="@drawable/ic_warning_red_small"
+                    android:padding="8dp"
+                    android:layout_marginStart="12dp"
+                    app:tint="@color/textSecondary"
+                    android:contentDescription="Remove Card"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active"
-                android:textColor="@color/primaryGreen"
-                android:textSize="12sp"
-                android:drawableStart="@drawable/ic_check_small_green"
-                android:drawablePadding="4dp" />
-        </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

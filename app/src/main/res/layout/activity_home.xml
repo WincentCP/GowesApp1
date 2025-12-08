@@ -177,11 +177,11 @@
                             android:layout_height="40dp"
                             android:src="@drawable/icon_bg_circle_green"
                             android:padding="8dp"/>
+
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_time_saved"
-                            app:tint="#34A853"
                             android:layout_marginTop="-32dp"/>
 
                         <TextView
@@ -275,7 +275,18 @@
                             app:tint="@color/primaryOrange"
                             android:layout_centerVertical="true"/>
 
+                        <!-- FIX: Changed from TextView to ImageView to prevent double text.
+                             The text 'Open 24/7' is already inside chip_green_background drawable -->
+                        <ImageView
+                            android:id="@+id/iv_station_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/chip_green_background"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"/>
+
                         <TextView
+                            android:id="@+id/tv_station_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/station_name"
@@ -283,23 +294,13 @@
                             android:textStyle="bold"
                             android:textColor="@color/textPrimary"
                             android:layout_toEndOf="@id/iv_pin"
+                            android:layout_toStartOf="@id/iv_station_status"
                             android:layout_marginStart="8dp"
-                            android:layout_centerVertical="true"/>
+                            android:layout_marginEnd="8dp"
+                            android:layout_centerVertical="true"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/station_status"
-                            android:textColor="#28A745"
-                            android:background="@drawable/chip_green_background"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:textSize="10sp"
-                            android:textStyle="bold"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"/>
                     </RelativeLayout>
 
                     <TextView

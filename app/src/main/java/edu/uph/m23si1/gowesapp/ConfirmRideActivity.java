@@ -21,9 +21,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class ConfirmRideActivity extends AppCompatActivity {
 
@@ -37,7 +40,7 @@ public class ConfirmRideActivity extends AppCompatActivity {
     private CardView payAsYouGoCard, useWalletCard;
     private ImageView radioPayAsYouGo, radioUseWallet;
     private LinearLayout linkCardPrompt, linkedCardDetails;
-    private TextView tvWalletBalance;
+    private TextView tvWalletBalance, tvCardNumber; // Added tvCardNumber
     private Button btnConfirm, btnLinkCard;
 
     private boolean isWalletSelected = false;
@@ -62,6 +65,7 @@ public class ConfirmRideActivity extends AppCompatActivity {
         linkCardPrompt = findViewById(R.id.link_card_prompt);
         linkedCardDetails = findViewById(R.id.linked_card_details);
         tvWalletBalance = findViewById(R.id.tv_wallet_balance);
+        tvCardNumber = findViewById(R.id.tv_card_number); // Init tvCardNumber
         btnConfirm = findViewById(R.id.btn_confirm);
         btnLinkCard = findViewById(R.id.btn_link_card);
 
@@ -139,9 +143,15 @@ public class ConfirmRideActivity extends AppCompatActivity {
             if (snapshot != null && snapshot.exists()) {
                 Number balanceNum = (Number) snapshot.get("walletBalance");
                 Boolean cardLinked = snapshot.getBoolean("isCardLinked");
+                String last4 = snapshot.getString("cardLast4");
 
                 walletBalance = (balanceNum != null) ? balanceNum.intValue() : 0;
                 isCardLinked = (cardLinked != null) ? cardLinked : false;
+
+                // Update card text
+                if (tvCardNumber != null) {
+                    tvCardNumber.setText("•••• " + (last4 != null ? last4 : "xxxx"));
+                }
 
                 updateUI();
             }
@@ -215,6 +225,8 @@ public class ConfirmRideActivity extends AppCompatActivity {
             db.collection("users").document(userId).update("isActiveRide", true);
         }
         Intent intent = new Intent(ConfirmRideActivity.this, ActiveRideActivity.class);
+        // Pass payment method if needed
+        intent.putExtra("PAYMENT_METHOD", isWalletSelected ? "Wallet" : "Card");
         startActivity(intent);
         finish();
     }
@@ -243,13 +255,30 @@ public class ConfirmRideActivity extends AppCompatActivity {
 
         Button btnCancel = dialog.findViewById(R.id.btn_cancel);
         Button btnLink = dialog.findViewById(R.id.btn_link);
+        EditText etCardNumber = dialog.findViewById(R.id.et_card_number);
 
         if (btnCancel != null) btnCancel.setOnClickListener(v -> dialog.dismiss());
         if (btnLink != null) {
             btnLink.setOnClickListener(v -> {
+                String cardNumber = "";
+                if (etCardNumber != null) {
+                    cardNumber = etCardNumber.getText().toString().replace(" ", "");
+                }
+
+                if (cardNumber.length() < 13) {
+                    Toast.makeText(this, "Invalid card number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String last4 = cardNumber.substring(cardNumber.length() - 4);
+
                 if (userId != null) {
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("isCardLinked", true);
+                    data.put("cardLast4", last4);
+
                     db.collection("users").document(userId)
-                            .update("isCardLinked", true)
+                            .set(data, SetOptions.merge())
                             .addOnSuccessListener(a -> {
                                 Toast.makeText(this, "Card Linked Successfully", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();

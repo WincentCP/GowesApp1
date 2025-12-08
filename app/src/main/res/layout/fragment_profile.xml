@@ -53,11 +53,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
+                        <!-- FIX: Changed src to ic_profile -->
                         <ImageView
                             android:id="@+id/iv_profile_pic"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_profile_placeholder"
+                            android:src="@drawable/ic_profile"
                             android:padding="12dp"
                             app:tint="@color/primaryOrange"/>
                     </androidx.cardview.widget.CardView>
