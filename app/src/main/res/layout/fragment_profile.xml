@@ -285,16 +285,20 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center">
+
+                        <!-- Increased size: 48dp -> 64dp -->
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
                             android:src="@drawable/icon_bg_circle_blue"
-                            android:padding="10dp"/>
+                            android:padding="12dp"/>
+
+                        <!-- Increased size: 24dp -> 36dp, Adjusted Margin: -36dp -> -50dp -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_rides_blue"
-                            android:layout_marginTop="-36dp"/>
+                            android:layout_marginTop="-50dp"/>
                         <TextView
                             android:id="@+id/tv_stat_rides"
                             android:layout_width="wrap_content"
@@ -319,17 +323,21 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center">
+
+                        <!-- Increased size: 48dp -> 64dp -->
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
                             android:src="@drawable/icon_bg_circle_green"
-                            android:padding="10dp"/>
+                            android:padding="12dp"/>
+
+                        <!-- Increased size: 24dp -> 36dp, Adjusted Margin: -36dp -> -50dp -->
+                        <!-- FIX: Changed src from ic_graph_white to ic_co2_saved_green, REMOVED TINT -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_graph_white"
-                            app:tint="#34A853"
-                            android:layout_marginTop="-36dp"/>
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_co2_saved_green"
+                            android:layout_marginTop="-50dp"/>
                         <TextView
                             android:id="@+id/tv_stat_co2"
                             android:layout_width="wrap_content"
@@ -354,18 +362,22 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center">
+
+                        <!-- Increased size: 48dp -> 64dp -->
                         <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
                             android:src="@drawable/icon_bg_circle_purple"
-                            android:padding="10dp"/>
+                            android:padding="12dp"/>
+
+                        <!-- Increased size: 24dp -> 36dp, Adjusted Margin: -36dp -> -50dp -->
+                        <!-- FIX: Removed tint for ic_rank_top10 -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_rank_top10"
-                            android:padding="2dp"
-                            android:layout_marginTop="-36dp"
-                            app:tint="#9B51E0"/>
+                            android:padding="3dp"
+                            android:layout_marginTop="-50dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

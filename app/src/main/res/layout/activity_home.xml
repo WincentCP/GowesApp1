@@ -127,16 +127,20 @@
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:gravity="center">
+
+                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
                             android:src="@drawable/icon_bg_circle_blue"
-                            android:padding="8dp"/>
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:src="@drawable/ic_rides_blue"
-                            android:layout_marginTop="-32dp"/>
+                            android:layout_marginTop="-44dp"/>
 
                         <TextView
                             android:id="@+id/tv_total_rides"
@@ -172,17 +176,20 @@
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:gravity="center">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/icon_bg_circle_green"
-                            android:padding="8dp"/>
 
+                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:src="@drawable/icon_bg_circle_green"
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:src="@drawable/ic_time_saved"
-                            android:layout_marginTop="-32dp"/>
+                            android:layout_marginTop="-44dp"/>
 
                         <TextView
                             android:id="@+id/tv_time_saved"
@@ -217,16 +224,20 @@
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:gravity="center">
+
+                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
                             android:src="@drawable/icon_bg_circle_purple"
-                            android:padding="8dp"/>
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:src="@drawable/ic_co2_saved"
-                            android:layout_marginTop="-32dp"/>
+                            android:layout_marginTop="-44dp"/>
 
                         <TextView
                             android:id="@+id/tv_co2_saved"
@@ -275,8 +286,6 @@
                             app:tint="@color/primaryOrange"
                             android:layout_centerVertical="true"/>
 
-                        <!-- FIX: Changed from TextView to ImageView to prevent double text.
-                             The text 'Open 24/7' is already inside chip_green_background drawable -->
                         <ImageView
                             android:id="@+id/iv_station_status"
                             android:layout_width="wrap_content"
