@@ -24,7 +24,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:backgroundTint="@color/primaryOrange"
-            app:cornerRadius="100dp" />
+            app:cornerRadius="100dp"
+            android:fontFamily="@font/manrope_bold"/>
 
         <TextView
             android:id="@+id/tv_terms"
@@ -34,7 +35,8 @@
             android:textColor="@color/textSecondary"
             android:textSize="12sp"
             android:gravity="center"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/manrope_medium"/>
     </LinearLayout>
 
     <ScrollView
@@ -68,7 +70,8 @@
                     android:text="Confirm Your Ride"
                     android:textColor="@color/textPrimary"
                     android:textSize="18sp"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/manrope_bold"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -108,18 +111,21 @@
                                 android:layout_marginStart="12dp">
 
                                 <TextView
+                                    android:id="@+id/tv_bike_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Bike BIKE-832"
+                                    android:text="Bike"
                                     android:textColor="@color/textPrimary"
                                     android:textSize="18sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/manrope_bold"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Electric"
                                     android:textColor="@color/primaryOrange"
-                                    android:textSize="12sp" />
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/manrope_medium"/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -138,8 +144,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="Rate"
                                 android:textColor="@color/textSecondary"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/manrope_medium"/>
                             <TextView
+                                android:id="@+id/tv_rate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Rp 8.000 / 60 min"
@@ -147,7 +155,8 @@
                                 android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/manrope_bold"/>
                         </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -160,109 +169,117 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginTop="24dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/manrope_bold"/>
 
+                <!-- Pay As You Go Option -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/pay_as_you_go_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp"
-                    android:background="@drawable/card_payment_selected"> <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/card_payment_selected">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:id="@+id/radio_btn_payg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_radio_button_checked"/> <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_pay_as_you_go"
-                        android:layout_marginStart="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pay-as-you-go"
-                            android:textColor="@color/textPrimary"
-                            android:textStyle="bold"
-                            android:layout_marginStart="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Recommended"
-                            android:textColor="@color/primaryGreen"
-                            android:background="@drawable/chip_recommended"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
-                            android:textSize="10sp"
-                            android:layout_marginStart="8dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/link_card_prompt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:layout_marginTop="12dp"
-                        android:visibility="gone"> <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Please link a payment card in\nyour wallet first"
-                        android:textColor="@color/primaryOrange"
-                        android:gravity="center" />
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_link_card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Link Card Now"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            app:strokeColor="@color/dividerColor"
-                            android:textColor="@color/accentBlue"
-                            android:layout_marginTop="8dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linked_card_details"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="12dp"
-                        android:visibility="visible"> <TextView
-                        android:id="@+id/tv_card_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•••• 4324"
-                        android:textColor="@color/textPrimary"
-                        android:layout_marginStart="64dp" />
+                        android:padding="16dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/info_box_blue"
-                            android:padding="16dp"
-                            android:layout_marginTop="12dp">
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:id="@+id/radio_btn_payg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_radio_button_checked"/>
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_pay_as_you_go"
+                                android:layout_marginStart="12dp" />
                             <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pay-as-you-go"
+                                android:textColor="@color/textPrimary"
+                                android:textStyle="bold"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/manrope_bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Recommended"
+                                android:textColor="@color/primaryGreen"
+                                android:background="@drawable/chip_recommended"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:textSize="10sp"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/manrope_bold"/>
+                        </LinearLayout>
+
+                        <!-- Link Card UI (Hidden for now) -->
+                        <LinearLayout
+                            android:id="@+id/link_card_prompt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:visibility="gone">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Please link a payment card in\nyour wallet first"
+                                android:textColor="@color/primaryOrange"
+                                android:gravity="center"
+                                android:fontFamily="@font/manrope_medium"/>
+                        </LinearLayout>
+
+                        <!-- Card Details -->
+                        <LinearLayout
+                            android:id="@+id/linked_card_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="12dp"
+                            android:visibility="visible">
+                            <TextView
+                                android:id="@+id/tv_card_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="•••• 4324"
+                                android:textColor="@color/textPrimary"
+                                android:layout_marginStart="64dp"
+                                android:fontFamily="@font/manrope_medium"/>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Initial hold: Rp 25.000\nYou only pay for the time you use"
-                                android:textColor="@color/accentBlue" />
+                                android:background="@drawable/info_box_blue"
+                                android:padding="16dp"
+                                android:layout_marginTop="12dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Initial hold: Rp 25.000\nYou only pay for the time you use"
+                                    android:textColor="@color/accentBlue"
+                                    android:fontFamily="@font/manrope_medium"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- Use Wallet Option -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/use_wallet_card"
                     android:layout_width="match_parent"
@@ -270,47 +287,96 @@
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="0dp"
-                    android:background="@drawable/card_payment_unselected"> <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/card_payment_unselected">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:id="@+id/radio_btn_wallet"
-                            android:layout_width="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_radio_button_unchecked"/> <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/ic_wallet"
-                        android:layout_marginStart="12dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <ImageView
+                                android:id="@+id/radio_btn_wallet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_radio_button_unchecked"/>
+
+                            <!-- Updated Icon -->
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_usewallet"
+                                android:layout_marginStart="12dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Use Wallet"
+                                android:textColor="@color/textPrimary"
+                                android:textStyle="bold"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/manrope_bold"/>
+
+                            <!-- Discount Chip -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5% OFF"
+                                android:textColor="@color/primaryOrange"
+                                android:background="@drawable/chip_recommended"
+                                android:backgroundTint="#26F36E21"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="8dp"
+                                android:fontFamily="@font/manrope_bold"/>
+                        </LinearLayout>
+
+                        <!-- Balance Row with Top Up -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Use Wallet"
-                            android:textColor="@color/textPrimary"
-                            android:textStyle="bold"
-                            android:layout_marginStart="12dp" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="64dp">
+
+                            <TextView
+                                android:id="@+id/tv_wallet_balance"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Balance: Rp 0"
+                                android:textColor="@color/textSecondary"
+                                android:fontFamily="@font/manrope_medium"/>
+
+                            <!-- Top Up Button (Text Style) -->
+                            <TextView
+                                android:id="@+id/btn_inline_top_up"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="+ Top Up"
+                                android:textColor="@color/primaryOrange"
+                                android:textStyle="bold"
+                                android:padding="8dp"
+                                android:background="?attr/selectableItemBackground"
+                                android:fontFamily="@font/manrope_bold"/>
+                        </LinearLayout>
+
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tv_wallet_balance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Current balance: Rp 150.000"
-                        android:textColor="@color/textSecondary"
-                        android:layout_marginStart="64dp"
-                        android:layout_marginTop="8dp" />
-
-                </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+                <!-- Pricing Breakdown -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -331,7 +397,8 @@
                             android:textColor="@color/textPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginBottom="12dp" />
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/manrope_bold"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -342,7 +409,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="Base rate (15 min)"
                                 android:textColor="@color/textSecondary"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/manrope_medium"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -350,53 +418,8 @@
                                 android:textColor="@color/textPrimary"
                                 android:textStyle="bold"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/auth_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Initial authorization"
-                                android:textColor="@color/textSecondary"
-                                android:layout_centerVertical="true" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp 25.000"
-                                android:textColor="@color/textPrimary"
-                                android:textStyle="bold"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/discount_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Wallet discount (5%)"
-                                android:textColor="@color/primaryGreen"
-                                android:layout_centerVertical="true" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-Rp 400"
-                                android:textColor="@color/primaryGreen"
-                                android:textStyle="bold"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true" />
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/manrope_bold"/>
                         </RelativeLayout>
 
                         <TextView
@@ -407,7 +430,8 @@
                             android:textColor="@color/textSecondary"
                             android:textSize="12sp"
                             android:visibility="gone"
-                            tools:visibility="visible" />
+                            tools:visibility="visible"
+                            android:fontFamily="@font/manrope_medium"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

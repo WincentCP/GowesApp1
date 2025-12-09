@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    android:padding="24dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="#E0E0E0"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Bike"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/textPrimary"
+        android:fontFamily="@font/manrope_bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose an available bike from the rack"
+        android:textSize="14sp"
+        android:textColor="@color/textSecondary"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/manrope_medium"/>
+
+    <!-- Options List -->
+    <RadioGroup
+        android:id="@+id/rg_bike_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <!-- Bike 001 -->
+        <RadioButton
+            android:id="@+id/rb_bike_001"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bike_selection_item"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+            android:padding="16dp"
+            android:text="BK-001"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="@font/manrope_bold"
+            android:drawableStart="@drawable/ic_electric_bike_orange"
+            android:drawablePadding="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Bike 002 -->
+        <RadioButton
+            android:id="@+id/rb_bike_002"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bike_selection_item"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+            android:padding="16dp"
+            android:text="BK-002"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="@font/manrope_bold"
+            android:drawableStart="@drawable/ic_electric_bike_orange"
+            android:drawablePadding="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Bike 003 -->
+        <RadioButton
+            android:id="@+id/rb_bike_003"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bike_selection_item"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+            android:padding="16dp"
+            android:text="BK-003"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="@font/manrope_bold"
+            android:drawableStart="@drawable/ic_electric_bike_orange"
+            android:drawablePadding="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Bike 004 -->
+        <RadioButton
+            android:id="@+id/rb_bike_004"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bike_selection_item"
+            android:button="@null"
+            android:drawableEnd="?android:attr/listChoiceIndicatorSingle"
+            android:padding="16dp"
+            android:text="BK-004"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="@font/manrope_bold"
+            android:drawableStart="@drawable/ic_electric_bike_orange"
+            android:drawablePadding="16dp"
+            android:layout_marginBottom="12dp"/>
+
+    </RadioGroup>
+
+    <!-- Confirm Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_confirm_selection"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Unlock Bike"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/primaryOrange"
+        app:cornerRadius="30dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/manrope_bold"
+        android:enabled="false"/>
+
+</LinearLayout>

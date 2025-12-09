@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Icon Box -->
+        <!-- Increased from 60dp -> 64dp -->
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/chip_light_gray">
+
+            <!-- Increased from 36dp -> 40dp -->
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_electric_bike_orange"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <!-- Ride Details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/tv_bike_id_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BK-001 • 1hr 32 min"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/manrope_bold"/>
+
+            <TextView
+                android:id="@+id/tv_ride_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yesterday, 2:30 PM"
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/manrope_medium"/>
+        </LinearLayout>
+
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tv_ride_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp 16.000"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/manrope_bold"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

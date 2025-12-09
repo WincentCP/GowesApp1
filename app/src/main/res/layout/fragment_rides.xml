@@ -1,289 +1,485 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundCream"
-    tools:context=".RidesFragment">
+    android:background="@color/backgroundCream">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:paddingBottom="96dp"> <TextView
-        android:id="@+id/tv_rides_title"
-        style="@style/Gowes.FragmentTitle"
-        android:text="@string/rides_title" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_gradient_orange"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:gravity="center_horizontal">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_app_logo"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ready_to_ride"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ready_to_ride_desc"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:alpha="0.9" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_scan_qr"
-                    style="@style/Gowes.Button.Secondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/scan_bike_qr"
-                    android:backgroundTint="@color/white"
-                    app:icon="@drawable/ic_qr_scan_orange"
-                    app:iconTint="@color/primaryOrange"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:layout_marginTop="16dp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:weightSum="3">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp">
+            <!-- Title -->
             <TextView
+                android:id="@+id/tv_rides_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/recent_rides"
+                android:text="@string/rides_title"
                 android:textColor="@color/textPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tv_view_all"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/view_all"
-                android:textColor="@color/primaryOrange"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:drawableEnd="@drawable/ic_arrow_right_orange"
-                android:drawablePadding="4dp" />
-        </RelativeLayout>
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/manrope_bold"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+            <!-- Ready to Ride Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
-        </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_gradient_orange"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/riding_tips"
-            android:textColor="@color/textPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
+                    <!-- Icon Container -->
+                    <!-- Increased size: 100dp -> 110dp -->
+                    <FrameLayout
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:background="@drawable/icon_bg_circle_blue"
+                        android:backgroundTint="#20FFFFFF">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+                        <!-- FIX: Removed tint so the orange logo shows up. Increased size 64dp -> 72dp -->
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:src="@drawable/ic_app_logo"
+                            android:layout_gravity="center"/>
+                    </FrameLayout>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ready_to_ride"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/manrope_bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ready_to_ride_desc"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:alpha="0.9"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/manrope_medium"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_scan_qr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="@string/scan_bike_qr"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/primaryOrange"
+                        app:icon="@drawable/ic_qr_scan_orange"
+                        app:iconTint="@color/primaryOrange"
+                        app:cornerRadius="100dp"
+                        android:layout_marginTop="20dp"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:fontFamily="@font/manrope_bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Stats Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:baselineAligned="false">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Stat 1: Total Rides -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text="🚥"
-                        android:textSize="28sp"
-                        android:gravity="center" />
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginEnd="8dp">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <!-- Increased size: 56dp -> 60dp -->
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/icon_bg_circle_blue"
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 32dp -> 36dp, Adjusted Margin: -44dp -> -48dp -->
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_rides_blue"
+                            android:layout_marginTop="-48dp"/>
+
                         <TextView
+                            android:id="@+id/tv_total_rides"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_title_traffic"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
                             android:textColor="@color/textPrimary"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="12dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_desc_traffic"
+                            android:text="Total\nRides"
+                            android:textSize="12sp"
                             android:textColor="@color/textSecondary"
-                            android:textSize="12sp" />
+                            android:gravity="center"/>
                     </LinearLayout>
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/dividerColor"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Stat 2: Time Saved -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text="⛑️"
-                        android:textSize="28sp"
-                        android:gravity="center" />
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white"
+                    android:layout_marginEnd="8dp">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <!-- Increased size: 56dp -> 60dp -->
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/icon_bg_circle_green"
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 32dp -> 36dp, Adjusted Margin: -44dp -> -48dp -->
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_time_saved"
+                            android:layout_marginTop="-48dp"/>
+
                         <TextView
+                            android:id="@+id/tv_time_saved"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_title_helmet"
+                            android:text="0h"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
                             android:textColor="@color/textPrimary"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="12dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_desc_helmet"
+                            android:text="Time\nSaved"
+                            android:textSize="12sp"
                             android:textColor="@color/textSecondary"
-                            android:textSize="12sp" />
+                            android:gravity="center"/>
                     </LinearLayout>
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/dividerColor"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Stat 3: CO2 Saved -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text="🔦"
-                        android:textSize="28sp"
-                        android:gravity="center" />
+                    android:layout_weight="1"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <!-- Increased size: 56dp -> 60dp -->
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/icon_bg_circle_purple"
+                            android:padding="10dp"/>
+
+                        <!-- Increased size: 32dp -> 36dp, Adjusted Margin: -44dp -> -48dp -->
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:src="@drawable/ic_co2_saved"
+                            android:layout_marginTop="-48dp"/>
+
                         <TextView
+                            android:id="@+id/tv_co2_saved"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_title_lights"
+                            android:text="0kg"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
                             android:textColor="@color/textPrimary"
-                            android:textStyle="bold" />
+                            android:layout_marginTop="12dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/tip_desc_lights"
+                            android:text="CO₂\nSaved"
+                            android:textSize="12sp"
                             android:textColor="@color/textSecondary"
-                            android:textSize="12sp" />
+                            android:gravity="center"/>
                     </LinearLayout>
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
-
-            <LinearLayout
+            <!-- Recent Rides Header -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/banner_weekend_special"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_weekend_special" />
-
-                <LinearLayout
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp">
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/recent_rides"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/manrope_bold"/>
+                <TextView
+                    android:id="@+id/tv_view_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_all"
+                    android:textColor="@color/primaryOrange"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/ic_arrow_right_orange"
+                    android:drawablePadding="4dp"
+                    android:fontFamily="@font/manrope_bold"/>
+            </RelativeLayout>
+
+            <!-- RecyclerView for Rides -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recent_rides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_recent_ride"/>
+
+            <!-- Empty State Text (Hidden by default) -->
+            <TextView
+                android:id="@+id/tv_no_rides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No rides yet. Start your first journey!"
+                android:textColor="@color/textSecondary"
+                android:gravity="center"
+                android:padding="20dp"
+                android:visibility="gone"/>
+
+            <!-- Riding Tips Header -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/riding_tips"
+                android:textColor="@color/textPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/manrope_bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/promo_title"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-                    <TextView
-                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:text="🚥"
+                            android:textSize="24sp"
+                            android:gravity="center" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_title_traffic"
+                                android:textColor="@color/textPrimary"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_desc_traffic"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dividerColor"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/promo_desc"
-                        android:textColor="@color/white"
-                        android:alpha="0.9"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:text="⛑️"
+                            android:textSize="24sp"
+                            android:gravity="center" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_title_helmet"
+                                android:textColor="@color/textPrimary"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_desc_helmet"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/dividerColor"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:text="🔦"
+                            android:textSize="24sp"
+                            android:gravity="center" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_title_lights"
+                                android:textColor="@color/textPrimary"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tip_desc_lights"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/banner_weekend_special"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_weekend_special" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/promo_title"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/promo_desc"
+                            android:textColor="@color/white"
+                            android:alpha="0.9"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

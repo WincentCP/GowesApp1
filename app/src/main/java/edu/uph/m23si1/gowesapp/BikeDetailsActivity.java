@@ -2,83 +2,74 @@ package edu.uph.m23si1.gowesapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
 public class BikeDetailsActivity extends AppCompatActivity {
 
-    private static final String TAG = "BikeDetailsActivity";
-    private static final String QR_PREFIX = "GOWES-";
+    private RadioGroup rgBikeSelection;
+    private TextView tvBatteryLevel, tvRange, tvStatus;
+    private MaterialButton btnRentBike;
+    private ImageView btnBack;
+    private String selectedBikeId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bike_details);
 
-        ImageView ivBack = findViewById(R.id.iv_back);
-        TextView tvBikeName = findViewById(R.id.tv_bike_name);
-        // ⬇️ This MUST match the id in activity_bike_details.xml
-        MaterialButton btnContinue = findViewById(R.id.btn_continue);
+        rgBikeSelection = findViewById(R.id.rg_bike_selection);
+        tvBatteryLevel = findViewById(R.id.tv_battery_level);
+        tvRange = findViewById(R.id.tv_range);
+        tvStatus = findViewById(R.id.tv_status);
+        btnRentBike = findViewById(R.id.btn_rent_bike);
+        btnBack = findViewById(R.id.btn_back);
 
-        // Get bike ID / QR value from Intent
-        String rawBikeId = getIntent().getStringExtra("BIKE_ID");
-        Log.d(TAG, "Received BIKE_ID extra: " + rawBikeId);
-
-        if (rawBikeId == null || rawBikeId.isEmpty()) {
-            rawBikeId = "BK-001"; // fallback
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
         }
 
-        // Normalize:
-        //  - "GOWES-BK-001" -> "BK-001"
-        //  - "BK-001" stays "BK-001"
-        String normalizedBikeId;
-        if (rawBikeId.startsWith(QR_PREFIX)) {
-            normalizedBikeId = rawBikeId.substring(QR_PREFIX.length());
-        } else {
-            normalizedBikeId = rawBikeId;
-        }
+        // Handle Bike Selection - ALL BIKES AVAILABLE & SAME SPECS
+        rgBikeSelection.setOnCheckedChangeListener((group, checkedId) -> {
+            btnRentBike.setEnabled(true);
+            btnRentBike.setAlpha(1.0f);
 
-        if (tvBikeName != null) {
-            tvBikeName.setText(normalizedBikeId);
-        } else {
-            Log.w(TAG, "tv_bike_name is null – check activity_bike_details.xml");
-        }
+            if (checkedId == R.id.rb_bike_001) {
+                updateBikeStats("BK-001");
+            } else if (checkedId == R.id.rb_bike_002) {
+                updateBikeStats("BK-002");
+            } else if (checkedId == R.id.rb_bike_003) {
+                updateBikeStats("BK-003");
+            } else if (checkedId == R.id.rb_bike_004) {
+                updateBikeStats("BK-004");
+            }
+        });
 
-        if (ivBack != null) {
-            ivBack.setOnClickListener(v -> finish());
-        }
+        btnRentBike.setOnClickListener(v -> {
+            if (selectedBikeId != null) {
+                Intent intent = new Intent(BikeDetailsActivity.this, ConfirmRideActivity.class);
+                intent.putExtra("SELECTED_BIKE_ID", selectedBikeId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Please select a bike", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        if (btnContinue != null) {
-            btnContinue.setOnClickListener(v -> {
-                Log.d(TAG, "Continue button clicked, going to ConfirmRideActivity with BIKE_ID = " + normalizedBikeId);
-                Toast.makeText(
-                        BikeDetailsActivity.this,
-                        "Continuing booking for " + normalizedBikeId,
-                        Toast.LENGTH_SHORT
-                ).show();
-
-                try {
-                    Intent intent = new Intent(BikeDetailsActivity.this, ConfirmRideActivity.class);
-                    intent.putExtra("BIKE_ID", normalizedBikeId);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "Failed to open ConfirmRideActivity", e);
-                    Toast.makeText(
-                            BikeDetailsActivity.this,
-                            "Cannot open booking screen: " + e.getMessage(),
-                            Toast.LENGTH_LONG
-                    ).show();
-                }
-            });
-        } else {
-            Log.e(TAG, "btn_continue is null. Check the button id in activity_bike_details.xml");
-            Toast.makeText(this, "Internal error: continue button not found", Toast.LENGTH_SHORT).show();
-        }
+    private void updateBikeStats(String bikeId) {
+        selectedBikeId = bikeId;
+        // Standardized stats for all bikes as requested
+        tvBatteryLevel.setText("100%");
+        tvRange.setText("60 km");
+        tvStatus.setText("Available");
+        tvStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
     }
 }

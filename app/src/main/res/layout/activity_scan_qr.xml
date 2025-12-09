@@ -1,141 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/black">
 
-    <!-- Camera Preview: Critical for CameraX -->
+    <!-- Added ID: previewView -->
     <androidx.camera.view.PreviewView
-        android:id="@+id/camera_preview"
+        android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
-    <!-- Back Button -->
+    <!-- Overlay -->
     <ImageView
-        android:id="@+id/iv_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/icon_bg_circle_blue"
-        android:backgroundTint="#80000000"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/ic_scanner_frame_placeholder"
+        android:layout_gravity="center"
+        app:tint="@color/white"
+        android:alpha="0.8"/>
 
-    <!-- Scanner UI Overlay -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/scanner_ui_layout"
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="24dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="@drawable/icon_bg_circle_blue"
+            android:backgroundTint="#80000000"
+            android:padding="10dp"
+            app:tint="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:text="Scan QR Code"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
 
-        <ImageView
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:src="@drawable/ic_scanner_frame_placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+    <!-- Centered Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Align QR code within the frame"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:gravity="center"
+        android:background="@drawable/chip_light_gray"
+        android:backgroundTint="#80000000"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:text="Align QR code within the frame"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Warning Layout (Hidden by default) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/warning_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#D9000000"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_warning"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_warning_large_yellow"
-            app:layout_constraintBottom_toTopOf="@+id/tv_warning_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/tv_warning_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Active Ride in Progress"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_warning_msg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_warning" />
-
-        <TextView
-            android:id="@+id/tv_warning_msg"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="12dp"
-            android:text="You cannot scan a new bike while you have an active ride. Please finish your current ride first."
-            android:textAlignment="center"
-            android:textColor="@color/textSecondary"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_go_back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_warning_title" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_go_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:backgroundTint="@color/primaryOrange"
-            android:text="Go Back"
-            android:textColor="@color/white"
-            app:cornerRadius="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_warning_msg" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
