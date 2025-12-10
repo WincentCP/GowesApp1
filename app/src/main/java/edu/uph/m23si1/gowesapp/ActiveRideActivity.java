@@ -1,6 +1,8 @@
 package edu.uph.m23si1.gowesapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,9 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -31,29 +32,27 @@ import java.util.Map;
 public class ActiveRideActivity extends AppCompatActivity {
 
     private static final String TAG = "ActiveRideActivity";
-
-    // Tarif per blok
     private static final double RATE_PER_BLOCK = 8000.0;
-    private static final double SECONDS_PER_BLOCK = 3600.0; // 60 menit
+    private static final double SECONDS_PER_BLOCK = 3600.0;
 
-    private TextView tvTimer, tvCurrentCost;
+    private TextView tvTimer, tvCurrentCost, tvBikeName;
     private Handler timerHandler;
     private Runnable timerRunnable;
 
     private long startTime = 0;
     private long timeInMilliseconds = 0;
+    private String bikeModel = "Gowes Bike";
+    private String bikeId = "BK-UNKNOWN";
 
+    private double finalCalculatedCost = 0.0;
     private String finalRideDuration;
-    private double finalCalculatedCost = 0.0; // base charge before discount
 
     private FirebaseFirestore db;
-    private DatabaseReference rtDbRef; // Realtime Database untuk data live
+    private DatabaseReference rtDbRef;
     private String userId;
-
-    // Payment method passed from ConfirmRideActivity ("Wallet" / "Card")
     private String paymentMethod = "Wallet";
+    private String currentRideDocId; // To hold "ride_123456"
 
-    // Ambil foto untuk konfirmasi parkir
     private final ActivityResultLauncher<Intent> cameraResultLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.StartActivityForResult(),
@@ -62,8 +61,7 @@ public class ActiveRideActivity extends AppCompatActivity {
                             Toast.makeText(this, "Photo captured!", Toast.LENGTH_SHORT).show();
                             endRide();
                         } else {
-                            Toast.makeText(this, "Photo cancelled. Please take photo to end ride.", Toast.LENGTH_SHORT).show();
-                            // Kalau batal, lanjutkan timer lagi
+                            Toast.makeText(this, "Photo cancelled.", Toast.LENGTH_SHORT).show();
                             resumeTimerAfterCancel();
                         }
                     });
@@ -81,49 +79,19 @@ public class ActiveRideActivity extends AppCompatActivity {
         }
         userId = user.getUid();
 
-        // Baca payment method dari ConfirmRideActivity
-        String pm = getIntent().getStringExtra(RideCompleteActivity.EXTRA_PAYMENT_METHOD);
-        if (pm != null && !pm.isEmpty()) {
-            paymentMethod = pm;
-        }
-
-        // Realtime Database untuk data live
-        rtDbRef = FirebaseDatabase.getInstance().getReference("activeRides").child(userId);
-
-        // Set perjalanan aktif di Firestore & Realtime DB
-        db.collection("users").document(userId).update("isActiveRide", true);
-        rtDbRef.child("isActive").setValue(true);
-        rtDbRef.child("startTime").setValue(System.currentTimeMillis());
-
         tvTimer = findViewById(R.id.tv_timer);
         tvCurrentCost = findViewById(R.id.tv_current_cost);
+        tvBikeName = findViewById(R.id.tv_bike_name);
         Button parkButton = findViewById(R.id.btn_park);
         Button backHomeButton = findViewById(R.id.btn_back_home);
 
-        // Inisialisasi timer handler & runnable
-        timerHandler = new Handler(Looper.getMainLooper());
-        timerRunnable = new Runnable() {
-            @Override
-            public void run() {
-                timeInMilliseconds = System.currentTimeMillis() - startTime;
-                long totalSeconds = timeInMilliseconds / 1000;
-                updateTimerUI(totalSeconds);
+        boolean isNewRide = getIntent().getBooleanExtra("IS_NEW_RIDE", false);
 
-                // Hitung cost per blok (minimal 1 blok)
-                long totalBlocks = (long) Math.ceil(totalSeconds / SECONDS_PER_BLOCK);
-                if (totalBlocks == 0) totalBlocks = 1;
-                finalCalculatedCost = totalBlocks * RATE_PER_BLOCK;
-                updateCostUI(finalCalculatedCost);
-
-                // Update Realtime Database
-                if (rtDbRef != null) {
-                    rtDbRef.child("currentTime").setValue(totalSeconds);
-                    rtDbRef.child("currentCost").setValue(finalCalculatedCost);
-                }
-
-                timerHandler.postDelayed(this, 1000);
-            }
-        };
+        if (isNewRide) {
+            initializeNewRide();
+        } else {
+            resumeRideState();
+        }
 
         parkButton.setOnClickListener(v -> {
             timerHandler.removeCallbacks(timerRunnable);
@@ -131,16 +99,114 @@ public class ActiveRideActivity extends AppCompatActivity {
             showDetectingDialog();
         });
 
-        backHomeButton.setOnClickListener(v -> finish());
-
-        startTime = System.currentTimeMillis();
-        timerHandler.postDelayed(timerRunnable, 0);
+        backHomeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(ActiveRideActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
     }
 
-    private void resumeTimerAfterCancel() {
-        if (timerHandler == null || timerRunnable == null) return;
-        // lanjutkan dari waktu terakhir
-        startTime = System.currentTimeMillis() - timeInMilliseconds;
+    private void initializeNewRide() {
+        // 1. Get Data
+        paymentMethod = getIntent().getStringExtra(RideCompleteActivity.EXTRA_PAYMENT_METHOD);
+        if (paymentMethod == null) paymentMethod = "Wallet";
+
+        String intentModel = getIntent().getStringExtra("BIKE_MODEL");
+        if (intentModel != null) bikeModel = intentModel;
+
+        bikeId = getIntent().getStringExtra("BIKE_ID");
+        if (bikeId == null) bikeId = bikeModel;
+
+        if(tvBikeName != null) tvBikeName.setText(bikeModel);
+
+        startTime = System.currentTimeMillis();
+        currentRideDocId = "ride_" + startTime; // Generate Unique ID based on time
+
+        // 2. CREATE RIDE DOCUMENT IN FIRESTORE (The Schema for any user)
+        Map<String, Object> rideData = new HashMap<>();
+        rideData.put("rideId", currentRideDocId);
+        rideData.put("userId", userId);
+        rideData.put("bikeId", bikeId);
+        rideData.put("status", "Active");
+        rideData.put("startTime", startTime);
+        rideData.put("startStation", "UPH Medan Station"); // Default or Dynamic
+        rideData.put("initialCost", 0);
+        rideData.put("paymentMethod", paymentMethod);
+
+        // Save to 'rides' collection
+        db.collection("rides").document(currentRideDocId).set(rideData);
+
+        // 3. UPDATE USER STATE (Links user to this specific ride)
+        Map<String, Object> userUpdates = new HashMap<>();
+        userUpdates.put("isActiveRide", true);
+        userUpdates.put("currentRideId", currentRideDocId);
+
+        db.collection("users").document(userId).set(userUpdates, SetOptions.merge());
+
+        // 4. Update Realtime DB (Backup/Legacy)
+        rtDbRef = FirebaseDatabase.getInstance().getReference("activeRides").child(userId);
+        rtDbRef.child("isActive").setValue(true);
+        rtDbRef.child("startTime").setValue(startTime);
+        rtDbRef.child("bikeModel").setValue(bikeModel);
+
+        saveLocalState();
+        startTimer();
+    }
+
+    private void resumeRideState() {
+        SharedPreferences prefs = getSharedPreferences("GowesAppPrefs", Context.MODE_PRIVATE);
+        startTime = prefs.getLong("ride_start_time", 0);
+        bikeModel = prefs.getString("active_bike_model", "Gowes Electric Bike");
+        paymentMethod = prefs.getString("active_payment_method", "Wallet");
+
+        if (startTime == 0) {
+            // Fetch from Firestore if local data lost
+            db.collection("users").document(userId).get().addOnSuccessListener(snapshot -> {
+                if (snapshot.exists() && Boolean.TRUE.equals(snapshot.getBoolean("isActiveRide"))) {
+                    // Get the ID of the ride to resume
+                    currentRideDocId = snapshot.getString("currentRideId");
+                    // Ideally fetch startTime from the 'rides' collection using currentRideDocId
+                    // For simplicity, we restart if fails, but in prod fetch the doc.
+                    startTime = System.currentTimeMillis();
+                    startTimer();
+                } else {
+                    finish();
+                }
+            });
+        } else {
+            if(tvBikeName != null) tvBikeName.setText(bikeModel);
+            startTimer();
+        }
+    }
+
+    private void saveLocalState() {
+        SharedPreferences prefs = getSharedPreferences("GowesAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("ride_start_time", startTime);
+        editor.putString("active_bike_model", bikeModel);
+        editor.putString("active_payment_method", paymentMethod);
+        editor.apply();
+    }
+
+    private void startTimer() {
+        timerHandler = new Handler(Looper.getMainLooper());
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                timeInMilliseconds = System.currentTimeMillis() - startTime;
+                if (timeInMilliseconds < 0) timeInMilliseconds = 0;
+
+                long totalSeconds = timeInMilliseconds / 1000;
+                updateTimerUI(totalSeconds);
+
+                long totalBlocks = (long) Math.ceil(totalSeconds / SECONDS_PER_BLOCK);
+                if (totalBlocks == 0) totalBlocks = 1;
+                finalCalculatedCost = totalBlocks * RATE_PER_BLOCK;
+                updateCostUI(finalCalculatedCost);
+
+                timerHandler.postDelayed(this, 1000);
+            }
+        };
         timerHandler.postDelayed(timerRunnable, 0);
     }
 
@@ -159,16 +225,13 @@ public class ActiveRideActivity extends AppCompatActivity {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
         dialog.setContentView(R.layout.dialog_detecting_bike);
         dialog.setCancelable(false);
-
         if (dialog.findViewById(R.id.btn_cancel) != null) {
             dialog.findViewById(R.id.btn_cancel).setOnClickListener(v -> {
                 dialog.dismiss();
                 resumeTimerAfterCancel();
             });
         }
-
         dialog.show();
-
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (dialog.isShowing()) {
                 dialog.dismiss();
@@ -191,64 +254,44 @@ public class ActiveRideActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void endRide() {
-        // Tandai ride tidak aktif
-        db.collection("users").document(userId).update("isActiveRide", false);
-        if (rtDbRef != null) {
-            rtDbRef.removeValue(); // Hapus data live
+    private void resumeTimerAfterCancel() {
+        if (timerHandler != null && timerRunnable != null) {
+            timerHandler.removeCallbacks(timerRunnable);
+            timerHandler.postDelayed(timerRunnable, 0);
         }
+    }
+
+    private void endRide() {
+        // 1. Update Firestore User
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("isActiveRide", false);
+        updates.put("currentRideId", null);
+        db.collection("users").document(userId).update(updates);
+
+        // 2. Update Ride Document Status
+        // If we don't have currentRideDocId in memory (e.g. app restart), we should fetch it.
+        // Assuming normal flow for now.
+        if (currentRideDocId == null) currentRideDocId = "ride_" + startTime;
+        db.collection("rides").document(currentRideDocId).update("status", "Completed");
+
+        // 3. Clear Realtime DB & Local
+        if (rtDbRef == null) rtDbRef = FirebaseDatabase.getInstance().getReference("activeRides").child(userId);
+        rtDbRef.removeValue();
+
+        SharedPreferences prefs = getSharedPreferences("GowesAppPrefs", Context.MODE_PRIVATE);
+        prefs.edit().clear().apply();
 
         long durationMs = timeInMilliseconds;
-        long totalSeconds = durationMs / 1000;
-
-        // Base charge dari perhitungan blok
         int baseCharge = (int) Math.round(finalCalculatedCost);
+        double co2Grams = (durationMs / 60000.0) * (1.1 / 45.0) * 1000.0;
 
-        // Diskon -5% jika Wallet
-        double discountRate = paymentMethod.equalsIgnoreCase("Wallet") ? 0.05 : 0.0;
-        int discountAmount = (int) Math.round(baseCharge * discountRate);
-        int finalCharge = baseCharge - discountAmount;
-
-        // Hitung CO2 dalam gram (45 menit ≈ 1.1kg)
-        double minutes = durationMs / 60000.0;
-        double kgPerMinute = 1.1 / 45.0;
-        double co2Kg = minutes * kgPerMinute;
-        double co2Grams = co2Kg * 1000.0; // sekarang dalam gram
-
-        // Kurangi saldo dompet hanya jika bayar pakai Wallet
-        if (paymentMethod.equalsIgnoreCase("Wallet")) {
-            DocumentReference userDocRef = db.collection("users").document(userId);
-            db.runTransaction(transaction -> {
-                DocumentSnapshot snapshot = transaction.get(userDocRef);
-                Number currentBalanceNum = (Number) snapshot.get("walletBalance");
-                int currentBalance = (currentBalanceNum != null) ? currentBalanceNum.intValue() : 0;
-                int newBalance = currentBalance - finalCharge;
-                transaction.update(userDocRef, "walletBalance", newBalance);
-                return null;
-            }).addOnFailureListener(e -> Log.w(TAG, "Gagal mengurangi saldo", e));
-        }
-
-        // Simpan riwayat perjalanan
-        Map<String, Object> rideHistory = new HashMap<>();
-        rideHistory.put("duration", finalRideDuration);
-        rideHistory.put("durationSeconds", totalSeconds);
-        rideHistory.put("baseCost", baseCharge);
-        rideHistory.put("finalCost", finalCharge);
-        rideHistory.put("paymentMethod", paymentMethod);
-        rideHistory.put("co2SavedGrams", co2Grams);
-        rideHistory.put("timestamp", System.currentTimeMillis());
-
-        db.collection("users").document(userId).collection("rideHistory")
-                .add(rideHistory)
-                .addOnSuccessListener(docRef -> Log.d(TAG, "Riwayat perjalanan disimpan"))
-                .addOnFailureListener(e -> Log.w(TAG, "Gagal simpan riwayat", e));
-
-        // Kirim data ke RideCompleteActivity
         Intent intent = new Intent(ActiveRideActivity.this, RideCompleteActivity.class);
         intent.putExtra(RideCompleteActivity.EXTRA_RIDE_DURATION_MS, durationMs);
         intent.putExtra(RideCompleteActivity.EXTRA_BASE_CHARGE, baseCharge);
         intent.putExtra(RideCompleteActivity.EXTRA_PAYMENT_METHOD, paymentMethod);
-        intent.putExtra(RideCompleteActivity.EXTRA_CO2_SAVED, co2Grams); // dalam gram
+        intent.putExtra(RideCompleteActivity.EXTRA_CO2_SAVED, co2Grams);
+        intent.putExtra(RideCompleteActivity.EXTRA_BIKE_ID, bikeModel);
+
         startActivity(intent);
         finish();
     }

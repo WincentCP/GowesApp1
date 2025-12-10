@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".HomeFragment"
     android:background="@color/backgroundCream">
 
     <androidx.core.widget.NestedScrollView
@@ -128,14 +129,12 @@
                         android:padding="16dp"
                         android:gravity="center">
 
-                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
                             android:src="@drawable/icon_bg_circle_blue"
                             android:padding="10dp"/>
 
-                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
@@ -177,14 +176,12 @@
                         android:padding="16dp"
                         android:gravity="center">
 
-                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
                             android:src="@drawable/icon_bg_circle_green"
                             android:padding="10dp"/>
 
-                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
@@ -225,14 +222,12 @@
                         android:padding="16dp"
                         android:gravity="center">
 
-                        <!-- Increased size: 40dp -> 56dp -->
                         <ImageView
                             android:layout_width="56dp"
                             android:layout_height="56dp"
                             android:src="@drawable/icon_bg_circle_purple"
                             android:padding="10dp"/>
 
-                        <!-- Increased size: 24dp -> 32dp, Adjusted Margin: -32dp -> -44dp -->
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
@@ -357,13 +352,17 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
                                     android:gravity="bottom">
+
+                                    <!-- FIX: Added ID here -->
                                     <TextView
+                                        android:id="@+id/tv_available_bikes_count"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="4"
+                                        android:text="0"
                                         android:textSize="24sp"
                                         android:textStyle="bold"
                                         android:textColor="@color/textPrimary"/>
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -384,6 +383,7 @@
                             android:layout_marginBottom="12dp"/>
 
                         <TextView
+                            android:id="@+id/tv_bike_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="● All bikes ready to ride"

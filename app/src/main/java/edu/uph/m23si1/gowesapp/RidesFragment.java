@@ -33,6 +33,7 @@ public class RidesFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private ListenerRegistration ridesListener;
+    private ListenerRegistration statsListener;
 
     private RecyclerView rvRecentRides;
     private RideAdapter rideAdapter;
@@ -69,6 +70,13 @@ public class RidesFragment extends Fragment {
             });
         }
 
+        // Optional: Klik View All untuk melihat history lengkap
+        if (tvViewAll != null) {
+            tvViewAll.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "View All clicked", Toast.LENGTH_SHORT).show();
+            });
+        }
+
         return view;
     }
 
@@ -83,38 +91,36 @@ public class RidesFragment extends Fragment {
     }
 
     private void loadUserStats(String userId) {
-        // Read Stats directly from User document for consistency
-        db.collection("users").document(userId)
+        statsListener = db.collection("users").document(userId)
                 .addSnapshotListener((snapshot, e) -> {
                     if (e != null) return;
                     if (snapshot != null && snapshot.exists()) {
-                        // Assuming you save these fields in 'stats' map or flat
-                        // Adjust if your DB structure is different
                         Double rides = snapshot.getDouble("stats.totalRides");
                         Double co2 = snapshot.getDouble("stats.totalCO2Saved");
 
-                        // Default to 0 if null
                         int r = (rides != null) ? rides.intValue() : 0;
                         double c = (co2 != null) ? co2 : 0.0;
+                        double hoursSaved = r * 0.33;
 
-                        // Mock Time Saved based on rides (approx 30 mins per ride)
-                        int hoursSaved = (r * 30) / 60;
-
-                        tvTotalRides.setText(String.valueOf(r));
-                        tvTimeSaved.setText(hoursSaved + "h");
-                        tvCo2Saved.setText(String.format("%.1fkg", c));
+                        if (tvTotalRides != null) tvTotalRides.setText(String.valueOf(r));
+                        if (tvTimeSaved != null) tvTimeSaved.setText(String.format("%.1fh", hoursSaved));
+                        if (tvCo2Saved != null) tvCo2Saved.setText(String.format("%.1fkg", c));
                     }
                 });
     }
 
     private void loadRecentRides(String userId) {
+        // PERBAIKAN: Kembali ke path users -> rideHistory.
+        // Jika data sewa tidak muncul, pastikan dokumen di Firestore memiliki field 'timestamp'.
         Query query = db.collection("users").document(userId).collection("rideHistory")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(3);
+                .limit(5);
 
         ridesListener = query.addSnapshotListener((snapshots, e) -> {
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e);
+                // Kita tidak memerlukan index khusus untuk query subcollection ini
+                // kecuali jika ada filter tambahan.
                 return;
             }
 
@@ -122,35 +128,28 @@ public class RidesFragment extends Fragment {
             if (snapshots != null && !snapshots.isEmpty()) {
                 for (DocumentSnapshot doc : snapshots) {
                     RideModel ride = doc.toObject(RideModel.class);
-                    rideList.add(ride);
+                    // Validasi agar tidak crash jika ada data korup
+                    if (ride != null) {
+                        rideList.add(ride);
+                    }
                 }
+                // Update UI: Tampilkan list, sembunyikan pesan kosong
+                rvRecentRides.setVisibility(View.VISIBLE);
+                tvNoRides.setVisibility(View.GONE);
             } else {
-                // ADD DUMMY DATA if list is empty, so it looks "used" as requested
-                addDummyData();
+                // Update UI: Sembunyikan list, tampilkan pesan kosong
+                rvRecentRides.setVisibility(View.GONE);
+                tvNoRides.setVisibility(View.VISIBLE);
             }
 
             rideAdapter.notifyDataSetChanged();
-            tvNoRides.setVisibility(View.GONE); // Always hide "No Rides" since we have dummy data
-            rvRecentRides.setVisibility(View.VISIBLE);
         });
-    }
-
-    private void addDummyData() {
-        // Template data to make the account look active
-        long now = System.currentTimeMillis();
-        rideList.add(new RideModel("25 min", 8000, now - 86400000L)); // Yesterday
-        rideList.add(new RideModel("42 min", 12000, now - 172800000L)); // 2 days ago
-        rideList.add(new RideModel("15 min", 4000, now - 259200000L)); // 3 days ago
-
-        // Manually set IDs for dummy data display
-        rideList.get(0).setBikeId("BK-003");
-        rideList.get(1).setBikeId("BK-001");
-        rideList.get(2).setBikeId("BK-002");
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (ridesListener != null) ridesListener.remove();
+        if (statsListener != null) statsListener.remove();
     }
 }

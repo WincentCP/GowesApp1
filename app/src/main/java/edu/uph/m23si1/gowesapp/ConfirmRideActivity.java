@@ -1,7 +1,9 @@
 package edu.uph.m23si1.gowesapp;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class ConfirmRideActivity extends AppCompatActivity {
     private boolean isWalletSelected = false;
 
     private String bikeId;
+    private String bikeModel = "Gowes Electric Bike"; // Default model
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private long currentBalance = 0;
@@ -60,18 +63,27 @@ public class ConfirmRideActivity extends AppCompatActivity {
         radioBtnPayG = findViewById(R.id.radio_btn_payg);
         radioBtnWallet = findViewById(R.id.radio_btn_wallet);
         tvWalletBalance = findViewById(R.id.tv_wallet_balance);
-        btnInlineTopUp = findViewById(R.id.btn_inline_top_up); // Note: Make sure this ID exists in XML if not found
+        btnInlineTopUp = findViewById(R.id.btn_inline_top_up);
 
         // Retrieve Data from Intent
-        String selectedBikeId = getIntent().getStringExtra("SELECTED_BIKE_ID");
-        if (selectedBikeId != null && !selectedBikeId.isEmpty()) {
-            bikeId = selectedBikeId;
-        } else {
-            bikeId = "BK-UNKNOWN";
+        if (getIntent() != null) {
+            String selectedBikeId = getIntent().getStringExtra("SELECTED_BIKE_ID");
+            String selectedModel = getIntent().getStringExtra("BIKE_MODEL");
+
+            if (selectedBikeId != null && !selectedBikeId.isEmpty()) {
+                bikeId = selectedBikeId;
+            } else {
+                bikeId = "BK-001";
+            }
+
+            if (selectedModel != null && !selectedModel.isEmpty()) {
+                bikeModel = selectedModel;
+            }
         }
 
+        // Show the Model Name instead of just ID if available, or a combo
         if (tvBikeName != null) {
-            tvBikeName.setText("Bike " + bikeId);
+            tvBikeName.setText(bikeModel);
         }
 
         setupPaymentSelection();
@@ -85,7 +97,6 @@ public class ConfirmRideActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> finish());
         }
 
-        // Top Up Action - check if button exists in layout first
         if (btnInlineTopUp != null) {
             btnInlineTopUp.setOnClickListener(v -> showTopUpDialog());
         }
@@ -215,6 +226,7 @@ public class ConfirmRideActivity extends AppCompatActivity {
         rideData.put("rideId", rideId);
         rideData.put("userId", userId);
         rideData.put("bikeId", bikeId);
+        rideData.put("bikeModel", bikeModel); // Save model to firestore
         rideData.put("startTime", startTime);
         rideData.put("status", "Active");
         rideData.put("startStation", "UPH Medan Station");
@@ -224,15 +236,14 @@ public class ConfirmRideActivity extends AppCompatActivity {
         // Attempt to start ride
         db.collection("rides").document(rideId)
                 .set(rideData)
-                .addOnSuccessListener(aVoid -> updateUserStatus(userId, rideId, bikeId, startTime))
+                .addOnSuccessListener(aVoid -> updateUserStatus(userId, rideId, bikeId, bikeModel, startTime))
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Start ride failed", e);
-                    // Show exact error to user for debugging
                     Toast.makeText(ConfirmRideActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }
 
-    private void updateUserStatus(String userId, String rideId, String bikeId, long startTime) {
+    private void updateUserStatus(String userId, String rideId, String bikeId, String bikeModel, long startTime) {
         Map<String, Object> updates = new HashMap<>();
         updates.put("isActiveRide", true);
         updates.put("currentRideId", rideId);
@@ -240,10 +251,25 @@ public class ConfirmRideActivity extends AppCompatActivity {
         db.collection("users").document(userId)
                 .update(updates)
                 .addOnSuccessListener(aVoid -> {
+                    // --- SAVE LOCAL STATE FOR TIMER AND MODEL ---
+                    SharedPreferences prefs = getSharedPreferences("GowesAppPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("is_ride_active", true);
+                    editor.putLong("ride_start_time", startTime);
+                    editor.putString("active_bike_id", bikeId);
+                    editor.putString("active_bike_model", bikeModel); // Save the human-readable model
+                    editor.apply();
+
                     Intent intent = new Intent(ConfirmRideActivity.this, ActiveRideActivity.class);
                     intent.putExtra("RIDE_ID", rideId);
                     intent.putExtra("BIKE_ID", bikeId);
+                    intent.putExtra("BIKE_MODEL", bikeModel); // Pass to active ride
                     intent.putExtra("START_TIME", startTime);
+                    intent.putExtra("IS_NEW_RIDE", true);
+                    intent.putExtra(RideCompleteActivity.EXTRA_PAYMENT_METHOD, isWalletSelected ? "Wallet" : "PayAsYouGo");
+
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                     startActivity(intent);
                     finish();
                 })
